@@ -1,0 +1,26 @@
+- name: check exploit dir mode
+  file:
+    path: "{{ WAS_dir }}/exploit"
+    owner: wasadm
+    group: wasgrp
+    mode: 0755
+
+- name: create ear delivery dir
+  become_user: wasadm
+  tags: create directory
+  file:
+    path: "{{ WAS_dir }}/exploit/ear_{{ ansible_date_time.date }} "
+    state: directory
+    owner: wasadm
+    group: wasgrp
+    mode: 0777
+
+- name: create backup ear delivery directory
+  become_user: wasadm
+  tags: create directory
+  file:
+    path: "{{ WAS_dir }}/exploit/backup_ear "
+    state: directory
+    owner: wasadm
+    group: wasgrp
+    mode: 0777

@@ -1,0 +1,21 @@
+- name: ensure nginx is at the latest version
+  shell: dnf install nginx -y
+  become: yes
+
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+  become: yes
+
+- name: install elastic from template
+  template:
+    src: elasticsearch.conf.j2
+    dest: /etc/nginx/conf.d/elasticsearch.conf
+  become: yes
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  become: yes

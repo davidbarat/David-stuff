@@ -1,0 +1,13 @@
+[Unit]
+Description=Elastic Agent
+
+[Service]
+LimitMEMLOCK=infinity
+User=
+ExecStart="{{ install }}/elasticsearch/bin/elasticsearch"
+
+TimeoutStart=0
+KillMode=process
+
+[install]
+WantedBy=multi-user.target

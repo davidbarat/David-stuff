@@ -1,0 +1,3 @@
+# default vars
+was_dir: '/opt/IBM/WebSphere85/application'
+url_sab: 'https://google.com'

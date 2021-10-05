@@ -1,0 +1,9 @@
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    line: "{{ item.line }}}"
+    create: yes
+  with_items:
+    - {line: 'cluster.name: '}
+    - {line: 'cluster.initial_master_node: "{{ IP_MASTER }}"'}
+    - {line: 'discovery.seed_hosts: "{{ IP_NODE }}", "{{ IP_MASTER }}"'}

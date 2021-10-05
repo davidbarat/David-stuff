@@ -1,0 +1,3 @@
+- hosts: X3, STANDALONE
+  roles:
+    - maintenance

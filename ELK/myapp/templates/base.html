@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mycss.css') }}">
+</head>
+
+<body>
+    <div class="navbar navbar">
+        <div class="container justify-content-end">
+            <ul class="nav justify-content-end">
+                <li class="nav-item"><a href="{{ url_for('index)}}" id="home">Home</a></li>
+                <li class="nav-item"><a href="{{ url_for('index)}}" id="detail">Detail</a></li>
+                <li class="nav-item"><a href="{{ url_for('healthcheck)}}" id="healthcheck">healthcheck</a></li>
+                <li class="nav-item"><a href="{{ url_for('toolbox)}}" id="toolbox">Toolbox</a></li>
+            </ul>
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-323423.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</body>
+
+</html>

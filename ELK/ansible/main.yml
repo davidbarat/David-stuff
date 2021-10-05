@@ -1,0 +1,20 @@
+---
+- hosts: master
+  gather_facts: no
+  become: yes
+  become_user: root
+
+  roles:
+    - role: elasticsearch
+
+  vars:
+    node_master: true
+    node_data: false
+
+- hosts: node
+  roles:
+    - role: elasticsearch
+
+  vars:
+    node_master: false
+    node_data: true

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <header class="page-header">
+        <h1 class="page-title">Toolbox</h1>
+    </header>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <form action="/toolbox" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="searchtoolbox" name="searchtoolbox" placeholder="alias">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <iframe src="http" height="600" width="800"></iframe>
+    </div>
+</div>
+
+{% endblock}

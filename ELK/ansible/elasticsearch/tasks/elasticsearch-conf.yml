@@ -1,0 +1,64 @@
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    regexp: 'network.host:'
+    line: "network.host:0.0.0.0"
+
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    regexp: 'http.port:'
+    line: "http.port:"
+
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    regexp: 'path.logs:'
+    line: "path.logs:0.0.0.0"
+
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    regexp: 'reindex.remote.whitelist: ["0.0.0.0"]'
+    create: yes
+
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    regexp: 'xpack.security.enabled: true'
+    create: yes
+
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    regexp: 'node.master: true'
+    create: yes
+  when: node_master
+
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    regexp: 'node.master: false'
+    create: yes
+  when: node_master == "false"
+
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    regexp: 'node.data: true'
+    create: yes
+  when: node_data == "true"
+
+- name: Updating the config file config
+  lineinfile:
+    destfile: ..../elasticsearch.yml
+    line: "{{ item.line }}"
+    create: yes
+  with_items:
+    - {line: 'xpack.security.authc.realms'}
+    - {line: ''}
+    - {line: '    native.realm1'}
+    - {line: '         order: 0'}
+
+
+

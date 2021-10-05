@@ -1,0 +1,7 @@
+- hosts: CORE
+  roles:
+    - synchronize
+
+- hosts: CORE2
+  roles:
+    - replace

@@ -1,0 +1,19 @@
+- name: set fact from fact
+  set_fact:
+    find_ear: "{{ hostvars[CORE]['find_ear'] }}"
+
+- name: WASTools.sh launch SDE backup
+  shell: |
+    cd "{{ WAS_dir }}/exploit"
+    ./WASTools exportApp SDE {{ env_cible }} {{ WAS_dir }}/exploit/backup_ear
+
+- name: WASTools.sh launch SDE backup
+  shell: |
+    cd "{{ WAS_dir }}/exploit"
+    ./WASTools updateApp SDE {{ env_cible }} {{ WAS_dir }}/exploit/ear_{{ ansible_date_time.date }}/{{ item.path | basename }}
+  with_items: "{{ find_ear.files }}"
+
+- name: clean ear directory
+  file:
+    path: "{{ WAS_dir }}/exploit/ear_{{ ansible_date_time.date }}"
+    state: absent

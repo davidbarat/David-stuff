@@ -1,0 +1,4 @@
+nexus: url
+bin_nexus: elastic
+version_elastic: 7.10.2
+PORT_ELASTIC: 9200

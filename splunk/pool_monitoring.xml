@@ -1,0 +1,50 @@
+<form>
+    <label>IRE-PoolMonitoring</label>
+        <fieldset submitButton="false">
+            <input type="dropdown" token="chkInterval" searchWhenChanged="true">
+                <label>Interval (by day)</label>
+                <choice value="1">one day</choice>
+                <choice value="2">two days</choice>
+                <choice value="3">three days</choice>
+                <choice value="4">four days</choice>
+                <choice value="5">five days</choice>
+                <choice value="6">six days</choice>
+                <choice value="7">one week</choice>
+            </input>
+            <input type="dropdown" token="chkPool" searchWhenChanged="true">
+                <label>Source</label>
+                <choice value="SIBFAPThreadPool">SIBFAPThreadPool</choice>
+                <choice value="TCPChannel.DCS">TCPChannel.DCS</choice>
+                <choice value="server.startup">server.startup</choice>
+                <choice value="WebContainer">WebContainer</choice>
+                <choice value="SIBJMSRAThreadPool">SIBJMSRAThreadPool</choice>
+                <choice value="ProcessDiscovery">ProcessDiscovery</choice>
+                <choice value="Default">Default</choice>
+                <choice value="ORB.thread.pool">ORB.thread.pool</choice>
+                <choice value="HAManager.threadpool">HAManager.threadpool</choice>
+            </input>
+        </fieldset>
+    <row>
+        <panel>
+            <chart>
+                <title>% use</title>
+                <search>
+                    <query> index=sab* "source=/appvol/WAS/DAS/waslog/trace.log" UsageInfo earliest=-$chkInterval$d@d 
+                    | rex field=_raw "\[(?<timestamp>[^\[]*)\]\s(?<hexa>[^\s]*)\s(?<thread>[^\s]*)\s(?<type>[^\s]*)\s(?<usageinfo>.{11})(?<help>\[\w.*\])\s(?<egal>[\=])
+                      (?<threadname>\w*.\w*.\w*?):(?<hung>\d+)\/(?<active>\d+)\/(?<size>\d+)\/(?<max>\d+)"                      
+                    | table timestamp active hung 
+                    | sort timestamp</query>
+                    <earliest>-24h@h</earliest>
+                    <latest>now</latest>
+                    <sampleRatio>1</sampleRatio>
+                </search>
+                <option name="charting.axisY.scale">linear</option>
+                <option name="charting.chart">column</option>
+                <option name="charting.chart.showDataLabels">minmax</option>
+                <option name="charting.chart.stackMode">default</option>
+                <option name="charting.chart.drilldown">none</option>
+                <option name="charting.layout.splitSeries">0</option>
+            </chart>
+        </panel>
+    </row>
+</form>

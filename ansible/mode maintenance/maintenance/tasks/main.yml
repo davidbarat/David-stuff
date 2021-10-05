@@ -1,0 +1,39 @@
+- name: create css directory
+  tags: create directory
+  file:
+    path: "{{ was_dir }}/{{ doc_root }}/css"
+    state: directory
+    owner: wasadm
+    group: wasgrp
+    mode: 0775
+
+- name: copy css files
+  tags: css files
+  copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "{{ was_dir }}/{{ doc_root }}/css"
+    owner: wasadm
+    group: wasgrp
+    mode: 0644
+  with_items:
+    - CCL_IE10.css
+    - GeneralCCL.css
+    - GeneralCCL_LtR.css
+    - rouge__skin_cclcom.css
+
+
+- name: passage mode maintenance
+  tags: templating
+  template:
+    src: maintenance.htlm.j2
+    dest: "{{ was_dir }}/{{ doc_root }}/maintenance.html"
+    mode: 0750
+    owner: wasadm
+    group: wasgrp
+
+- name: Create symbolic link 500.html
+  file:
+    src: "{{ was_dir }}/{{ doc_root }}/maintenance.html"
+    dest: "{{ was_dir }}/{{ doc_root }}/500.html"
+    state: link
+    force: yes

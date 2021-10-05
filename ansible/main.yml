@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: no
+  vars:
+    src_server:
+    http_port:
+    http_url:
+    tmp_path:
+  roles:
+    - retrieve 

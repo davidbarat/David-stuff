@@ -1,0 +1,4 @@
+docker network create nw-wlb
+
+docker run -itd --rm --security-opt secomp=unconfined --tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro 
+--network nw-wlb --hostname tu --name tu -p 10022:22 -p 8080:10080 repo

@@ -1,0 +1,50 @@
+- name: check ST directory
+  tags: check directory
+  stat:
+    path: "/sab/{{ ST }}/TLM0{{ TLM }}"
+  register: p
+
+- fail:
+    msg: "directory /sab/{{ ST }}/TLM0{{ TLM }} does not exist, please integrated TLM {{ TLM }}"
+  when: p is defined and 'stat' in p and p.stat.exists == false
+
+- name: create ear dir
+  tags: create directory
+  file:
+    path: "/sab/{{ ST }}/TLM0{{ TLM }}/ear"
+    state: directory
+    owner: sab
+    group: sabunix
+    mode: 0755
+
+- name: Find Infra zip file
+  find: paths="/sab/{{ ST }}/TLM0{{ TLM }}" patterns="Infra*.zip" recurse=yes
+  register: find_result
+
+- name: Ensure files are 0755
+  command: /sab/{{ ST }}/TLM0{{ TLM }} -type f -exec chmod -c 07555 {} \;
+  register: chmod_result
+  changed_when: "chmod_result.stdout!= \"\\"
+
+####################### OLD ############################
+#- name: Unpack Infra
+#  shell: 
+#    cd /sab/{{ ST }}/TLM0{{ TLM }}
+#    unzzip -o {{ item.path }} x3com[0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9][0-9].ear
+#  with_items: "{{ find_result.files }}"
+#######################################################
+
+
+- name: Unpack Infra
+  shell: unzip -o {{ item.path }} SDE.ear
+  args:
+    chdir: /sab/{{ ST }}/TLM0{{ TLM }}/ear
+  with_items: "{{ find_result.files }}"
+
+- name: Find ear file
+  find: paths="/sab/{{ ST }}/TLM0{{ TLM }}/ear" pattern="*.ear" recurse=yes
+  register: find_ear
+
+- name: ssh from CORE to DMGR
+  shell: "scp {{ item.path }} wasadm@{{groups['DMGR'][0]}}:/{{ WAS_dir }}/exploit/ear_{{ ansible_date_time.date }}"
+  with_items: "{{ find_ear.files }}"

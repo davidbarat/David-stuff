@@ -1,0 +1,50 @@
+---
+# 
+# installating Elasticsearch
+#
+- name: ensure java is at the latest version
+  shell: dnf install java -y
+  become: yes
+
+- name: Create bin folder
+  file:
+    path:
+    state: directory
+    owner:
+    group:
+    mode: 0755
+  become: yes
+  become_user:
+
+- name: change right on elastic logs folder
+  file:
+
+- name: get bin elastic
+  shell: "wget url nexus"
+
+- name: untar elastic archive
+  unarchive:
+    src:
+    dest:
+    owner:
+    group:
+    mode: 0755
+    remote_src: yes
+  become: yes
+  become_user:
+
+- name: include elasticsearch-cluster-info.yml
+  include: elasticsearch-cluster-info.yml
+  become: yes
+  become_user: 
+
+- name: include elasticsearch-jvmoptions.yml
+  include: elasticsearch-jvmoptions.yml
+  become: yes
+  become_user: 
+
+- name: include elasticsearch-service.yml
+  include: elasticsearch-service.yml
+
+- name: include install-nginx.yml
+  include: install-nginx.yml

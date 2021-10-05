@@ -1,0 +1,5 @@
+- name: replace core name if rootconfig
+  replace:
+    path: "/sab/{{ env_var }}/SABSTD/config"
+    regexp: core01
+    replace: "{{ core_name }}"

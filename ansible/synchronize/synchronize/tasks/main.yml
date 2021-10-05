@@ -1,0 +1,9 @@
+- name: Synchronize CORE after TLMs
+  host: "{{ groups['CORE2'][0]}}"
+  user: sab
+  synchronize:
+    src: "/sab/{{ env_var}}"
+    dest: "/sab/{{ env_var}}"
+    rsync_opts:
+      - "--exclude=*.log*"
+  delegate_to: {{ groups['CORE'][0]}}

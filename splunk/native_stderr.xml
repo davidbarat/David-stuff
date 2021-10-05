@@ -1,0 +1,90 @@
+<form>
+    <label>IRE-X3-JVM-Monitoring</label>
+        <fieldset submitButton="false">
+            <input type="dropdown" token="chkInterval" searchWhenChanged="true">
+                <label>Interval (by day)</label>
+                <choice value="1">one day</choice>
+                <choice value="2">two days</choice>
+                <choice value="3">three days</choice>
+                <choice value="4">four days</choice>
+                <choice value="5">five days</choice>
+                <choice value="6">six days</choice>
+                <choice value="7">one week</choice>
+            </input>
+            <input type="dropdown" token="chkSource" searchWhenChanged="true">
+                <label>Source</label>
+                <choice value="OASSAB0201FR">OASSAB0201FR</choice>
+                <choice value="OASSAB0202FR">OASSAB0202FR</choice>
+                <choice value="OASSAB0203FR">OASSAB0203FR</choice>
+                <choice value="OASSAB0204FR">OASSAB0204FR</choice>
+                <choice value="OASSAB0205FR">OASSAB0205FR</choice>
+                <choice value="6">OASSAB0206FR</choice>
+                <choice value="7">OASSAB0207FR</choice>
+                <choice value="8">OASSAB0208FR</choice>
+                <choice value="9">OASSAB0209FR</choice>
+            </input>
+        </fieldset>
+    <row>
+        <panel>
+            <title>X3 - Heap Size Use</title>
+            <chart>
+                <title>% use</title>
+                <search>
+                    <query> index=sab* source=/appvol/WAS/$chkSource$/waslog/native NOT "allocated-bytes non" earliest=-$chkInterval$d@d | eval _time = strftime(_time, "%Y-%m-%dT%H:%M:%S") | spath output=heapuse path
+                    =mem-info{@percent} | table _time, heapuse | where isnotnull(heapuse) | sort _time</query>
+                    <earliest>-24h@h</earliest>
+                    <latest>now</latest>
+                    <sampleRatio>1</sampleRatio>
+                </search>
+                <option name="charting.axisY.scale">linear</option>
+                <option name="charting.chart">column</option>
+                <option name="charting.chart.showDataLabels">minmax</option>
+                <option name="charting.chart.stackMode">default</option>
+                <option name="charting.chart.drilldown">none</option>
+                <option name="charting.layout.splitSeries">0</option>
+            </chart>
+        </panel>
+    </row>
+    <row>
+        <panel>
+            <title>X3 - Garbage Collector en ms</title>
+            <chart>
+                <title>Time (ms)</title>
+                <search>
+                    <query> index=sab* source=/appvol/WAS/$chkSource$/waslog/native NOT "allocated-bytes non" earliest=-$chkInterval$d@d | eval _time = strftime(_time, "%Y-%m-%dT%H:%M:%S") | spath output=garbagecollector path
+                    =exclusive-end{@durationms} | table _time, garbagecollector | where isnotnull(garbagecollector) | sort _time</query>
+                    <earliest>-24h@h</earliest>
+                    <latest>now</latest>
+                    <sampleRatio>1</sampleRatio>
+                </search>
+                <option name="charting.axisY.scale">linear</option>
+                <option name="charting.chart">column</option>
+                <option name="charting.chart.showDataLabels">minmax</option>
+                <option name="charting.chart.stackMode">default</option>
+                <option name="charting.chart.drilldown">none</option>
+                <option name="charting.layout.splitSeries">0</option>
+            </chart>
+        </panel>
+    </row>
+    <row>
+        <panel>
+            <title>X3 - Time between Garbage Collector en ms</title>
+            <chart>
+                <title>Time (ms)</title>
+                <search>
+                    <query> index=sab* source=/appvol/WAS/$chkSource$/waslog/native NOT "allocated-bytes non" earliest=-$chkInterval$d@d | spath output=interval path
+                    =exclusive-start{@intervalms} | table _time, interval | where isnotnull(interval) | sort _time | bucket span=1d _time |eval _time = strftime(_time, "%Y/%m/%d")</query>
+                    <earliest>-24h@h</earliest>
+                    <latest>now</latest>
+                    <sampleRatio>1</sampleRatio>
+                </search>
+                <option name="charting.axisY.scale">linear</option>
+                <option name="charting.chart">column</option>
+                <option name="charting.chart.showDataLabels">minmax</option>
+                <option name="charting.chart.stackMode">default</option>
+                <option name="charting.chart.drilldown">none</option>
+                <option name="charting.layout.splitSeries">0</option>
+            </chart>
+        </panel>
+    </row>
+</form>

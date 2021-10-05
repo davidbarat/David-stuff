@@ -1,0 +1,15 @@
+- hosts: DMGR
+  remote_user: wasadm
+  roles:
+    - push_file
+
+- hosts: CORE
+  remote_user: sab
+  gather_facts: yes
+  roles:
+    - get_st
+
+- hosts: DMGR
+  remote_user: wasadm
+  roles:
+    - maj_ear

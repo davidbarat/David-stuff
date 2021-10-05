@@ -1,0 +1,8 @@
+---
+PROD:
+    user: HBEU\I
+    pwd: pwd
+    VGC: 00234
+    X_list:
+      - https://1
+      - https://2

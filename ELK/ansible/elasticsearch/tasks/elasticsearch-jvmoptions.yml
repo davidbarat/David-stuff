@@ -1,0 +1,23 @@
+- name: Update log path
+  lineinfile:
+    destfile: ....../jvm.options
+    regexp: 'XX:Errorfile=' 
+    line: "-XX:ErrorFile="
+
+- name: Update log path
+  lineinfile:
+    destfile: ....../jvm.options
+    regexp: '8:-Xloggc/gc.log' 
+    line: "8:-Xloggc:"
+
+- name: Update log path
+  lineinfile:
+    destfile: ....../jvm.options
+    regexp: '9:-Xlog:gc' 
+    line: "9:-Xlog:gc*..."
+
+- name: Update heap size
+  lineinfile:
+    destfile: ....../jvm.options
+    regexp: '-Xms1g' 
+    line: "-Xms2g"

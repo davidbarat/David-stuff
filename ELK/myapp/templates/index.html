@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <br>
+    <h2> Rechercher multi index</h2>
+    <div class="row">
+        <div class="col-4">
+            <form action="/search" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="multisearch" name="multisearch" placeholder="alias">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock}
