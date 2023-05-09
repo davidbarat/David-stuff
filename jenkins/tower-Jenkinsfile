@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    environment {
+        API_CREDS = credentials('API_CREDENTIALS')
+        }
+    stages {
+        stage('tower') {
+            steps {
+                script {
+                    try {
+                    result = ansibleTower credentials: "${CREDENTIALS}", extraVars: '''{
+                    "CLIENT_ID": "${CLIENT_ID}" }
+                    catch (err) {
+                    echo "${currentBuild.log}"
+                    currentBuild.currentResult = 'FAILURE' }
+                    
+                    }
+            
+            }
+       }
+   }
+}
+    
