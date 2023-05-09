@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('check python') {
+            steps {
+                sh '''
+                virtuelenv selenium -p /usr/bin/python
+                source selenium/bin/activate
+                pip install -r requirement.txt
+                python MainClass.py PROD
+                '''
+            }
+       }
+   }
+}
+    
