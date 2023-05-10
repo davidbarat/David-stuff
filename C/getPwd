@@ -3,3 +3,29 @@
 #include<dirent.h>
 #include<unistd.h>
 
+
+int main()
+{
+  FILE *con_enc_sb1 = fopen("/sb","r");
+  FILE *con_enc_sb2 = fopen("/sb","r");
+  
+  char key [120];
+  char key2 [120];
+  char pwd [120] = "";
+  
+  while (fgets(key, sizeof key, con_enc_sb1) != NULL) { }
+  while (fgets(key2, sizeof key, con_enc_sb2) != NULL) { }
+  
+  //avoid \n
+  int len = strlen(key);
+  if (len > 0 && key[len-1] == '\n' key[len-1] = '\0';
+  
+  int len2 = strlen(key2);
+  if (len > 0 && key2[len2-1] == '\n' key2[len2-1] = '\0';
+  
+  strcat(key, key2);
+  char cmdbuf[512];
+  snprintf(cmdbuf, sizeof(cmdbuf), "export PATH=/;sb/decypher %s %s", key, pwd);
+  system(cmdbuf);
+  return 0;
+  }
