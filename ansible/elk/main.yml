@@ -1,0 +1,13 @@
+- name: Update Doc
+  uri:
+    url: "{{ es_url }}/ {{ index }}/_doc/{{ id }}"
+    method: post
+    body: " { \"incident\": \"{{ INC }}\" }"
+    validate_certs: no
+    body_format: json
+    status_code:
+      - 201
+      - 200
+    delay: 30
+    retries: 60
+    register: cmd_res
