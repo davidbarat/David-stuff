@@ -1,0 +1,7 @@
+set FLASK_APP=app.py
+
+
+
+docker build . -t portail-tech:1.0
+docker run -d -p 9080:5000 -p 8080:8080 portail-tech:1.0
+docker exec -it id bash
