@@ -1,3 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<section id="main-content">
+  <div class="container-fluid default">
+    {%if not launch %}
+    <form action="/tower" method="POST">
+      <div class="row">
+        <div class>
+          <div class="form-group">
+            <select name="id_inventory" class="custon-select">
+              <option selected Choisississez... </option>
+              <option value="OAT">OAT</option>
+            </select>
+          </div>
+        </div>
+        <div class="">
+          <input type="hidden" name="template_id" value="2222"/>
+          <input type="text" class="form-control" id="launchjob" name="launchjob" placeholder="">
+        </div>
+        <div class="row">
+          <div class="">
+            <button type="submit" class=""> Launch</button>
+          </div>
+        </div>
+        </form>
+      <hr class="mt-2 mb-3"/>
+      
+              
