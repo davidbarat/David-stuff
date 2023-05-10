@@ -1,1 +1,22 @@
-debug
+- name: Patch
+  uri:
+    url: "{{ api_url }}/{{ item[:-8] }}"
+    user: "{{ username }}"
+    password: "{{ password }}"
+    method: patch
+    body: " { \"incident\": \"{{ INC }}\" }"
+    force_basic_auth: yes
+    validate_certs: no
+    body_format: json
+    status_code:
+      - 201
+      - 200
+    delay: 30
+    retries: 60
+  with_items: "{{ inventory_hostname }}"
+  register: job_id
+  
+  
+- name: Set kenkins var
+  debug:
+    msg: "jenkins_export job_id_jenkins={{ job_id.results[0].json.json_id ( to_json ( from_json }}"
