@@ -11,3 +11,9 @@
     delay: 30
     retries: 60
     register: cmd_res
+
+- name: delete
+  uri:
+    url: /_update/{{ item }}"
+    method: post
+    body: "ctx._source.remove('{{ role_name }}')"
